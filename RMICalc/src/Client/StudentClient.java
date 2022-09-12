@@ -13,15 +13,13 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Interface.StudentInterface;
 
-/**
- *
- * @author hrecaman
- */
 public class StudentClient {
 
     public static void main(String[] args) throws IOException, NotBoundException {
@@ -43,21 +41,20 @@ public class StudentClient {
                 System.out.println("Ingrese cantidad de notas por estudiante");
                 cnotas= Integer.parseInt(br.readLine());
                 
-                String[][] mat = new String[cestudiantes][cnotas+3];
+                String[][] mat = new String[cestudiantes][cnotas+4];
                 for (int i = 0; i < cestudiantes; i++) {
                     System.out.println("Ingrese nombre del estudiante");
                     mat[i][0]= br.readLine().toString();
                     for (int j = 1; j <= cnotas; j++) {
-                        System.out.println("Ingrese nota");
-                        mat[i][j]= br.readLine().toString();
+                        mat[i][j]= String.valueOf(getRandomFloat());
                     }
                   }
 
-                  //imprimirMat(mat,cestudiantes,cnotas);
                   StudentInterface studentinterface= (StudentInterface)Naming.lookup("Student");
                   mat = studentinterface.calculateMayor(mat, cestudiantes, cnotas);
                   mat = studentinterface.calculateMenor(mat, cestudiantes, cnotas);
-                  imprimirMat(mat,cestudiantes,cnotas+1);
+                  mat = studentinterface.calculatePromedio(mat, cestudiantes, cnotas);
+                  mat = studentinterface.calculatePromedioGrupo(mat, cestudiantes, cnotas);
 		
                 } catch ( MalformedURLException | RemoteException ex) {
                     Logger.getLogger(StudentClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,5 +72,15 @@ public class StudentClient {
             }
           }
     }
+
+    public static float getRandomFloat(){
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        Random r = new Random();
+        float random = 0 + r.nextFloat() * (5 - 0); 
+        System.out.println("Nota generada" + df.format(random));
+        return random;
+    }
+     
 
 }

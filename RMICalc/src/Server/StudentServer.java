@@ -10,10 +10,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-/**
- *
- * @author hrecaman
- */
 public class StudentServer {
   public static void main(String []args) throws RemoteException
   { Registry reg=LocateRegistry.createRegistry(1099);

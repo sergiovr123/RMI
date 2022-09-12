@@ -8,11 +8,8 @@ package Implement;
 import Interface.StudentInterface;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.DecimalFormat;
 
-/**
- *
- * @author hrecaman
- */
 public class StudentImplement extends UnicastRemoteObject implements StudentInterface {
 
     public String[][] mat;
@@ -47,8 +44,10 @@ public class StudentImplement extends UnicastRemoteObject implements StudentInte
 
     @Override
     public String[][] calculateMayor(String[][] mat, int cestudiantes, int cnotas) throws RemoteException {
-        System.out.println("Calculate mayor!");
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         for (int i = 0; i < cestudiantes; i++) {
+            this.mayor=0;
             System.out.println("Estudiante!:"+ mat[i][0].toString());
             for (int j = 1; j <= cnotas; j++) {
                 if(mat[i][j]!=null && mat[i][j]!= ""){
@@ -58,15 +57,16 @@ public class StudentImplement extends UnicastRemoteObject implements StudentInte
                 }
                 
             }
-            mat[i][cnotas+1]=String.valueOf(mayor);
-            System.out.println("nota mayor!" + mayor);
+            mat[i][cnotas+1]=String.valueOf(df.format(mayor));
+            System.out.println("La nota mayor de " + mat[i][0].toString() +" es:"+ df.format(mayor));
           }
           return mat;
     }
 
     @Override
     public String[][] calculateMenor(String[][] mat, int cestudiantes, int cnotas) throws RemoteException {
-        System.out.println("Calculate menor!");
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         for (int i = 0; i < cestudiantes; i++) {
             System.out.println("Estudiante!:"+ mat[i][0].toString());
             menor = Float.parseFloat(mat[i][1]);
@@ -78,16 +78,45 @@ public class StudentImplement extends UnicastRemoteObject implements StudentInte
                 }
                 
             }
-            mat[i][cnotas+2]=String.valueOf(menor); 
-            System.out.println("nota menor!" + mayor);
+            mat[i][cnotas+2]=String.valueOf(df.format(menor)); 
+            System.out.println("La nota menor de " + mat[i][0].toString() +" es:"+ df.format(menor));
           }
           return mat;
     }
 
     @Override
     public String[][] calculatePromedio(String[][] mat, int cestudiantes, int cnotas) throws RemoteException {
-        return new String[1][1];
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        for (int i = 0; i < cestudiantes; i++) {
+            System.out.println("Estudiante!:"+ mat[i][0].toString());
+            this.promedio=0;
+            for (int j = 1; j <= cnotas; j++) {
+                if(mat[i][j]!=null && mat[i][j]!= ""){
+                    promedio = Float.sum(promedio,Float.parseFloat(mat[i][j]));  
+                }
+            }
+            promedio = promedio / cnotas;
+            mat[i][cnotas+3]=String.valueOf(df.format(promedio)); 
+            
+          }
+          return mat;
+    }
+
+
+    @Override
+    public String[][] calculatePromedioGrupo(String[][] mat, int cestudiantes, int cnotas) throws RemoteException {
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        System.out.println("Promedio del grupo!");
+        this.promedio=0;
+        for (int i = 0; i < cestudiantes; i++) {
+            System.out.println("Estudiante!:"+ mat[i][0].toString());
+            promedio =  Float.sum(promedio, Float.parseFloat(mat[i][cnotas+3]));  
+          }
+            promedio = promedio / cestudiantes;
+            System.out.println("El Promedio del grupo es!" + df.format(promedio));
+          return mat;
     }
 
 }

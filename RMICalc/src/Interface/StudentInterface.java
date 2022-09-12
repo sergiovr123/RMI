@@ -12,4 +12,5 @@ public interface StudentInterface extends Remote{
     public String[][] calculateMayor(String[][] mat, int cestudiantes, int cnotas) throws RemoteException;
     public String[][] calculateMenor(String[][] mat, int cestudiantes, int cnotas) throws RemoteException;
     public String[][] calculatePromedio(String[][] mat,  int cestudiantes, int cnotas) throws RemoteException;
+    public String[][] calculatePromedioGrupo(String[][] mat,  int cestudiantes, int cnotas) throws RemoteException;
 }

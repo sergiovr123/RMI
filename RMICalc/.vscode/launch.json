@@ -3,6 +3,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch StudentClient",
+            "request": "launch",
+            "mainClass": "Client.StudentClient",
+            "projectName": "RMICalc_b7169f6"
+        },
+        {
+            "type": "java",
+            "name": "Launch StudentServer",
+            "request": "launch",
+            "mainClass": "Server.StudentServer",
+            "projectName": "RMICalc_b7169f6"
+        },
+        {
+            "type": "java",
             "name": "Launch StudentServer",
             "request": "launch",
             "mainClass": "Server.StudentServer",
